@@ -32,7 +32,7 @@ map.onclick = (e)=> {
     L.Routing.control({
     waypoints: [
         L.latLng(latitude, longitude),
-        e.latLng
+        e.latlng
     ]
 }).addTo(map);
 }
