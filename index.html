@@ -24,23 +24,39 @@
                     var map = L.map('map').setView([latitude, longitude], 30
                     );
                     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
-var marker = L.marker([latitude, longitude]).addTo(map);
-map.onclick = (e)=> {
-    L.Routing.control({
-    waypoints: [
-        L.latLng(latitude, longitude),
-        e.latlng
-    ]
-}).addTo(map);
-}
+                        maxZoom: 19,
+                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                    }).addTo(map);
+                    var marker = L.marker([latitude, longitude]).addTo(map);
+                    map.onclick = (e) => {
+                        var routing = new L.Routing({
+                            position: 'topright'
+                            , routing: {
+                                router: myRouterFunction
+                            }
+                            , tooltips: {
+                                waypoint: 'Waypoint. Drag to move; Click to remove.',
+                                segment: 'Drag to create a new waypoint'
+                            }
+                            , styles: {     // see http://leafletjs.com/reference.html#polyline-options
+                                trailer: {}  // drawing line
+                                , track: {}   // calculated route result
+                                , nodata: {}  // line when no result (error)
+                            }
+                            , shortcut: {
+                                draw: {
+                                    enable: 68    // 'd'
+                                    , disable: 81  // 'q'
+                                }
+                            }
+                        });
+                        map.addControl(routing);
+                    }
                 },
                 function (error) {
                     console.error("Error getting location: ", error);
                 },
-                {enableHighAccuracy:true}
+                { enableHighAccuracy: true }
             );
         } else {
             console.error("Geolocation is not supported by this browser.");
