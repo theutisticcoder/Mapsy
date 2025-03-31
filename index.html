@@ -39,7 +39,8 @@ map.onclick = (e)=> {
                 },
                 function (error) {
                     console.error("Error getting location: ", error);
-                }
+                },
+                {enableHighAccuracy:true}
             );
         } else {
             console.error("Geolocation is not supported by this browser.");
