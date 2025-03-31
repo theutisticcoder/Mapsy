@@ -18,17 +18,17 @@
     <button style="z-index: 100000; font-size: larger; position: absolute; top: 100px" id="go">GO!</button>
     <script>
         var times = [];
-        var route = false;
+        var route = true;
         var num = 0;
         function sayDirections(instr) {
                     window.speechSynthesis.speak(new SpeechSynthesisUtterance(instr[num]))
                
-            if (route == true && num < (instr.length)) {
+            if (route == true && num < (instr.length - 1)) {
                 setTimeout(() => {
                     num++;
                     sayDirections(instr)
                 
-                }, parseInt(times[num]) * 1000)
+                }, times[num] * 1000)
             }
         }
         if ("geolocation" in navigator) {
@@ -72,13 +72,9 @@
                                 instructions.push(segment.text);
                             });
                             document.querySelector("#go").onclick = () => {
-                                if (!route) {
-                                    route = true;
                                     sayDirections(instructions);
-                                }
-                                else {
-                                    route = false;
-                                }
+                                
+                                
                             }
                         });
 
