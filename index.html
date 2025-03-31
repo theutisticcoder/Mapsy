@@ -20,7 +20,7 @@
         var route = false;
         function sayDirections(instr){
     instr.forEach(i=> {
-        window.speechSynthesis.speak(new SpeechSynthesisUtterance(i) + " and then ")
+        window.speechSynthesis.speak(new SpeechSynthesisUtterance(i + " and then "))
     })
     if(route==true){
         setTimeout(()=> {
