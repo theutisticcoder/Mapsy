@@ -21,7 +21,7 @@
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
                     console.log("Latitude: " + latitude + ", Longitude: " + longitude);
-                    var map = L.map('map').setView([latitude, longitude], 100
+                    var map = L.map('map').setView([latitude, longitude], 30
                     );
                     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
