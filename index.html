@@ -62,8 +62,8 @@
 routingControl.on('routesfound', function(e) {
     var route = e.routes[0]; // Get the first route
     var instructions = [];
-    
-    route.segments.forEach(function(segment){
+    console.log(route);
+    Array.from(route.segments).forEach(function(segment){
       segment.instructions.forEach(function(instruction){
             instructions.push(instruction.text);
       });
