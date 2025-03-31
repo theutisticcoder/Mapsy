@@ -63,10 +63,8 @@ routingControl.on('routesfound', function(e) {
     var route = e.routes[0]; // Get the first route
     var instructions = [];
     console.log(route);
-    Array.from(route.segments).forEach(function(segment){
-      segment.instructions.forEach(function(instruction){
-            instructions.push(instruction.text);
-      });
+    route.instructions.forEach(function(segment){
+            instructions.push(segment.text);
     });
 map.onkeydown =(e)=> {
     if(e.key === " "){
