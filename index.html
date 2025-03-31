@@ -16,6 +16,16 @@
 <body>
     <div id="map" style="height: 100vh; width: 100vw;"></div>
     <script>
+        function sayDirections(instr){
+    instr.forEach(i=> {
+        window.speechSynthesis.speak(new SpeechSynthesisUtterance(i) + " and then ")
+    })
+    if(route==true){
+        setTimeout(()=> {
+            sayDirections(instr, 60000)
+        })
+    }
+}
         if ("geolocation" in navigator) {
             // Get current position
             navigator.geolocation.getCurrentPosition(
@@ -37,14 +47,32 @@
                     }).addTo(map);
                     var marker = L.marker([latitude, longitude]).addTo(map);
                     map.on('click', (e) => {
-                        L.Routing.control({
+                        
+                        var routingControl = L.Routing.control({
                             waypoints: [
                                 L.latLng(latitude, longitude),
                                 e.latlng
                             ],
                             routeWhileDragging: true,
                             geocoder: geo
-                        }).addTo(map);
+                        })
+                        routingControl.addTo(map);
+
+routingControl.on('routesfound', function(e) {
+    var route = e.routes[0]; // Get the first route
+    var instructions = [];
+    
+    route.segments.forEach(function(segment){
+      segment.instructions.forEach(function(instruction){
+            instructions.push(instruction.text);
+      });
+    });
+
+    sayDirections(instructions);
+});
+
+
+
                     })
                 },
                 function (error) {
