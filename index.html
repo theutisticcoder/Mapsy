@@ -18,16 +18,20 @@
     <button style="z-index: 100000; font-size: larger; position: absolute; top: 100px" id="go">GO!</button>
     <script>
         var route = false;
-        function sayDirections(instr){
-    instr.forEach(i=> {
-        window.speechSynthesis.speak(new SpeechSynthesisUtterance(i + " and then "))
-    })
-    if(route==true){
-        setTimeout(()=> {
-            sayDirections(instr, 45000)
-        })
-    }
-}
+        function sayDirections(instr) {
+            instr.forEach(i => {
+                if (instr.findIndex(ins => ins === i) === (instr.length - 1)) {
+                    window.speechSynthesis.speak(new SpeechSynthesisUtterance(i))
+
+                }
+                else window.speechSynthesis.speak(new SpeechSynthesisUtterance(i + " and then "))
+            })
+            if (route == true) {
+                setTimeout(() => {
+                    sayDirections(instr, 45000)
+                })
+            }
+        }
         if ("geolocation" in navigator) {
             // Get current position
             navigator.geolocation.getCurrentPosition(
@@ -41,7 +45,7 @@
                         maxZoom: 19,
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                     }).addTo(map);
-                    var geo =  L.Control.Geocoder.nominatim();
+                    var geo = L.Control.Geocoder.nominatim();
                     var geocodingControl = new L.Control.Geocoder({
                         geocoder: geo,
                         collapsed: false // Make it initially expanded
@@ -49,7 +53,7 @@
                     }).addTo(map);
                     var marker = L.marker([latitude, longitude]).addTo(map);
                     map.on('click', (e) => {
-                        
+
                         var routingControl = L.Routing.control({
                             waypoints: [
                                 L.latLng(latitude, longitude),
@@ -60,23 +64,23 @@
                         })
                         routingControl.addTo(map);
 
-routingControl.on('routesfound', function(e) {
-    var route = e.routes[0]; // Get the first route
-    var instructions = [];
-    console.log(route);
-    route.instructions.forEach(function(segment){
-            instructions.push(segment.text);
-    });
-document.querySelector("#go").onclick = ()=> {
-    if(route){
-        route = false;
-    }
-    else{
-        route = true;
-        sayDirections(instructions);
-    }
-}
-});
+                        routingControl.on('routesfound', function (e) {
+                            var route = e.routes[0]; // Get the first route
+                            var instructions = [];
+                            console.log(route);
+                            route.instructions.forEach(function (segment) {
+                                instructions.push(segment.text);
+                            });
+                            document.querySelector("#go").onclick = () => {
+                                if (route) {
+                                    route = false;
+                                }
+                                else {
+                                    route = true;
+                                    sayDirections(instructions);
+                                }
+                            }
+                        });
 
 
 
