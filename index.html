@@ -23,7 +23,7 @@
         function sayDirections(instr) {
                     window.speechSynthesis.speak(new SpeechSynthesisUtterance(instr[num]))
                
-            if (route == true && num < (instr.length - 1)) {
+            if (route == true && num < (instr.length)) {
                 setTimeout(() => {
                     num++;
                     sayDirections(instr)
