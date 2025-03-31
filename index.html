@@ -72,12 +72,12 @@
                                 instructions.push(segment.text);
                             });
                             document.querySelector("#go").onclick = () => {
-                                if (route) {
-                                    route = false;
-                                }
-                                else {
+                                if (!route) {
                                     route = true;
                                     sayDirections(instructions);
+                                }
+                                else {
+                                    route = false;
                                 }
                             }
                         });
