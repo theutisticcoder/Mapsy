@@ -16,25 +16,22 @@
 <body>
     <div id="map" style="height: 100vh; width: 100vw;"></div>
     <button style="z-index: 100000; font-size: larger; position: absolute; top: 100px" id="go">GO!</button>
+    <button style="z-index: 100000; font-size: larger; position: absolute; top: 300px" id="w">WALK!</button>
     <script>
+        var instructions = [];
+        var points = [];
         var times = [];
         var route = true;
         var num = 0;
-        function sayDirections(instr) {
-                    window.speechSynthesis.speak(new SpeechSynthesisUtterance(instr[num]))
-               
-            if (route == true && num < (instr.length - 1)) {
-                setTimeout(() => {
-                    num++;
-                    sayDirections(instr)
-                
-                }, times[num] * 500)
-            }
-        }
+        var speed = 500;
+
+
         if ("geolocation" in navigator) {
+
             // Get current position
             navigator.geolocation.getCurrentPosition(
                 function (position) {
+
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
                     console.log("Latitude: " + latitude + ", Longitude: " + longitude);
@@ -65,16 +62,24 @@
 
                         routingControl.on('routesfound', function (e) {
                             var route = e.routes[0]; // Get the first route
-                            var instructions = [];
                             console.log(route);
                             route.instructions.forEach(function (segment) {
                                 times.push(segment.time)
                                 instructions.push(segment.text);
                             });
+                            route.waypoints.forEach(function (segment) {
+                                points.push({ lat: segment.latLng.lat, lng: segment.latLng.lng })
+                            });
                             document.querySelector("#go").onclick = () => {
-                                    sayDirections(instructions);
-                                
-                                
+                                const watchId = navigator.geolocation.watchPosition((e) => {
+                                    if (points.findIndex(l => l.lat === e.coords.latitude && l.lng === e.coords.longitude) > -1) {
+                                        window.speechSynthesis.speak(new SpeechSynthesisUtterance(instructions[points.findIndex(l => l.lat === e.coords.latitude && l.lng === e.coords.longitude)]))
+
+                                    }
+                                }, (err) => {
+                                    console.error(err)
+                                });
+
                             }
                         });
 
@@ -87,9 +92,12 @@
                 },
                 { enableHighAccuracy: true }
             );
+
+
         } else {
             console.error("Geolocation is not supported by this browser.");
         }
+
     </script>
 </body>
 
