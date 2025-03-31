@@ -36,11 +36,11 @@
                         // Add other options if needed
                     }).addTo(map);
                     var marker = L.marker([latitude, longitude]).addTo(map);
-                    map.on('markgeocode', (e) => {
+                    map.on('click', (e) => {
                         L.Routing.control({
                             waypoints: [
                                 L.latLng(latitude, longitude),
-                                e.geocode.center
+                                e.latlng
                             ],
                             routeWhileDragging: true,
                             geocoder: geo
