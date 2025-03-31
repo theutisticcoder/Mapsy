@@ -28,7 +28,6 @@
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                     }).addTo(map);
                     var marker = L.marker([latitude, longitude]).addTo(map);
-                    map.onclick = (e) => {
                         var routing = new L.Routing({
                             position: 'topright'
                             , routing: {
@@ -43,6 +42,11 @@
                                 , track: {}   // calculated route result
                                 , nodata: {}  // line when no result (error)
                             }
+                            , snapping: {
+                                layers: [mySnappingLayer]
+                                , sensitivity: 15
+                                , vertexonly: false
+                            }
                             , shortcut: {
                                 draw: {
                                     enable: 68    // 'd'
@@ -51,7 +55,7 @@
                             }
                         });
                         map.addControl(routing);
-                    }
+                    
                 },
                 function (error) {
                     console.error("Error getting location: ", error);
