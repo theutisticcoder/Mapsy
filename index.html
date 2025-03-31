@@ -17,19 +17,18 @@
     <div id="map" style="height: 100vh; width: 100vw;"></div>
     <button style="z-index: 100000; font-size: larger; position: absolute; top: 100px" id="go">GO!</button>
     <script>
+        var times = [];
         var route = false;
+        var num = 0;
         function sayDirections(instr) {
-            instr.forEach(i => {
-                if (instr.findIndex(ins => ins === i) === (instr.length - 1)) {
-                    window.speechSynthesis.speak(new SpeechSynthesisUtterance(i))
-
-                }
-                else window.speechSynthesis.speak(new SpeechSynthesisUtterance(i + " and then "))
-            })
-            if (route == true) {
+                    window.speechSynthesis.speak(new SpeechSynthesisUtterance(instr[num]))
+               
+            if (route == true && num < (instr.length - 1)) {
                 setTimeout(() => {
-                    sayDirections(instr, 45000)
-                })
+                    num++;
+                    sayDirections(instr)
+                
+                }, times[num])
             }
         }
         if ("geolocation" in navigator) {
@@ -69,6 +68,7 @@
                             var instructions = [];
                             console.log(route);
                             route.instructions.forEach(function (segment) {
+                                times.push(segment.time)
                                 instructions.push(segment.text);
                             });
                             document.querySelector("#go").onclick = () => {
