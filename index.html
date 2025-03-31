@@ -40,7 +40,7 @@
                         L.Routing.control({
                             waypoints: [
                                 L.latLng(latitude, longitude),
-                                e.latlng
+                                e.geocode.center
                             ],
                             routeWhileDragging: true,
                             geocoder: geo
