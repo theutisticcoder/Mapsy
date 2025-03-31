@@ -28,16 +28,13 @@
         if ("geolocation" in navigator) {
 
             // Get current position
-            navigator.geolocation.watchPosition(
+            navigator.geolocation.getCurrentPosition(
                 function (position) {
 
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
                     console.log("Latitude: " + latitude + ", Longitude: " + longitude);
-                    if (points.findIndex(l => l.lat === latitude && l.lng === longitude) > -1 && route) {
-                        window.speechSynthesis.speak(new SpeechSynthesisUtterance(instructions[points.findIndex(l => l.lat === latitude && l.lng === longitude)]))
-
-                    }
+                   
                     var map = L.map('map').setView([latitude, longitude], 30
                     );
                     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -90,7 +87,14 @@ route = true
                 { enableHighAccuracy: true , }
             );
 
+                navigator.geolocation.watchPosition((e)=> {
+                    if (points.findIndex(l => l.lat === e.coords.latitude && l.lng === e.coords.longitude) > -1 && route) {
+                        window.speechSynthesis.speak(new SpeechSynthesisUtterance(instructions[points.findIndex(l => l.lat === latitude && l.lng === longitude)]))
 
+                    }
+                }, (err)=> {
+                    if(err) console.error(err)
+                }, {timeout: 200})
         } else {
             console.error("Geolocation is not supported by this browser.");
         }
