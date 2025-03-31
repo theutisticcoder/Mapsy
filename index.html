@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 </head>
 
 <body>
@@ -28,14 +30,14 @@
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                     }).addTo(map);
                     var marker = L.marker([latitude, longitude]).addTo(map);
-                    map.on('click',(e) => {
+                    map.on('click', (e) => {
                         L.Routing.control({
                             waypoints: [
                                 L.latLng(latitude, longitude),
                                 e.latlng
                             ],
                             routeWhileDragging: true,
-                            geocoder: L.Control.Geocoder.nominatim()
+                            geocoder: L.Control.geocoder()
                         }).addTo(map);
                     })
                 },
