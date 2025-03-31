@@ -16,6 +16,7 @@
 <body>
     <div id="map" style="height: 100vh; width: 100vw;"></div>
     <script>
+        var route = false
         function sayDirections(instr){
     instr.forEach(i=> {
         window.speechSynthesis.speak(new SpeechSynthesisUtterance(i) + " and then ")
@@ -67,8 +68,16 @@ routingControl.on('routesfound', function(e) {
             instructions.push(instruction.text);
       });
     });
+map.onkeydown =(e)=> {
+    if(e.key === " "){
+        route = true;
+        sayDirections(instructions);
 
-    sayDirections(instructions);
+    }
+    else if(e.key === "x"){
+        route = false;
+    }
+}
 });
 
 
