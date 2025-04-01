@@ -11,12 +11,16 @@
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.10.0/dist/geosearch.css" />
+    <script src="https://unpkg.com/leaflet-geosearch@3.10.0/dist/geosearch.js"></script>
 </head>
 
 <body>
     <div id="map" style="height: 100vh; width: 100vw; top: 0vh;"></div>
-    <img src="icon.jpeg" style="z-index: 100000; position: absolute; top: 0px; left: 20vw; height: 10vh; color: black; background: #35c3da; border: 3px solid black;">
-    <button style="z-index: 100000; font-size: 50pt; height:10vh; width: 20vw; left: 0px; position: absolute; top: 0px;" id="go">GO!</button>
+    <img src="icon.jpeg"
+        style="z-index: 100000; position: absolute; top: 0px; left: 20vw; height: 10vh; color: black; background: #35c3da; border: 3px solid black;">
+    <button style="z-index: 100000; font-size: 50pt; height:10vh; width: 20vw; left: 0px; position: absolute; top: 0px;"
+        id="go">GO!</button>
     <script>
         var instructions = [];
         var points = [];
@@ -35,7 +39,7 @@
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
                     console.log("Latitude: " + latitude + ", Longitude: " + longitude);
-                   
+
                     var map = L.map('map').setView([latitude, longitude], 30
                     );
                     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -74,7 +78,7 @@
                             document.querySelector("#go").onclick = () => {
 
 
-route = true
+                                route = true
                             }
                         });
 
@@ -85,20 +89,32 @@ route = true
                 function (error) {
                     console.error("Error getting location: ", error);
                 },
-                { enableHighAccuracy: true , }
+                { enableHighAccuracy: true, }
             );
 
-                navigator.geolocation.watchPosition((e)=> {
-                    if (points.findIndex(l => l.lat === e.coords.latitude && l.lng === e.coords.longitude) > -1 && route) {
-                        window.speechSynthesis.speak(new SpeechSynthesisUtterance(instructions[points.findIndex(l => l.lat === latitude && l.lng === longitude)]))
+            navigator.geolocation.watchPosition((e) => {
+                if (points.findIndex(l => l.lat === e.coords.latitude && l.lng === e.coords.longitude) > -1 && route) {
+                    window.speechSynthesis.speak(new SpeechSynthesisUtterance(instructions[points.findIndex(l => l.lat === latitude && l.lng === longitude)]))
 
-                    }
-                }, (err)=> {
-                    if(err) console.error(err)
-                }, {timeout: 200})
+                }
+            }, (err) => {
+                if (err) console.error(err)
+            }, { timeout: 200 })
         } else {
             console.error("Geolocation is not supported by this browser.");
         }
+        const provider = new GeoSearch.OpenStreetMapProvider();
+
+        const searchControl = new GeoSearch.GeoSearchControl({
+            provider: provider,
+            style: 'bar',
+            autoComplete: true, // Enable autocomplete
+            autoCompleteDelay: 250, // Debounce delay
+            showMarker: true, // Add a marker on the map after searching
+            searchLabel: 'Enter location'
+        });
+
+        map.addControl(searchControl);
 
     </script>
 </body>
