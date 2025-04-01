@@ -30,7 +30,7 @@
         if ("geolocation" in navigator) {
 
             // Get current position
-            navigator.geolocation.getCurrentPosition(
+            navigator.geolocation.watchPosition(
                 function (position) {
 
                     const latitude = position.coords.latitude;
@@ -94,7 +94,7 @@
                 }
             }, (err) => {
                 if (err) console.error(err)
-            }, { timeout: 200 })
+            }, { timeout: 100 })
         } else {
             console.error("Geolocation is not supported by this browser.");
         }
