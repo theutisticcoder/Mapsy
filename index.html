@@ -11,9 +11,8 @@
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.10.0/dist/geosearch.css" />
-    <script src="https://unpkg.com/leaflet-geosearch@latest/dist/bundle.min.js"></script>
-</head>
+    <link rel="stylesheet" href="https://unpkg.com/@geoapify/leaflet-address-search-plugin@^1/dist/L.Control.GeoapifyAddressSearch.min.css" />
+    <script src="https://unpkg.com/@geoapify/leaflet-address-search-plugin@^1/dist/L.Control.GeoapifyAddressSearch.min.js"></script>
 
 <body>
     <div id="map" style="height: 100vh; width: 100vw; top: 0vh;"></div>
@@ -46,22 +45,10 @@
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                     }).addTo(map);
                     var geo = L.Control.Geocoder.nominatim();
-
+                    const addressSearchControl = L.control.addressSearch("057a7d7e19a24d9ca3fa3519d0fbafb7", { /* options */ });
+                    map.addControl(addressSearchControl);
                     var marker = L.marker([latitude, longitude]).addTo(map);
-                    const provider = new GeoSearch.OpenStreetMapProvider();
-
-                    const searchControl = new GeoSearch.GeoSearchControl({
-                        provider: provider,
-                        style: 'bar',
-                        autoComplete: true, // Enable autocomplete
-                        autoCompleteDelay: 0, // Debounce delay
-                        showMarker: true, // Add a marker on the map after searching
-                        searchLabel: 'Enter location'
-                    });
-
-                    map.addControl(searchControl);
-                    searchControl.style.left = "70vw"
-                    map.on('click', function (e) {
+                     map.on('click', function (e) {
 
                         var routingControl = L.Routing.control({
                             waypoints: [
