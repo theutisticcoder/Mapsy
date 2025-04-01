@@ -48,7 +48,7 @@
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                     }).addTo(map);
                     var geo = L.Control.Geocoder.nominatim();
-                   
+
                     var marker = L.marker([latitude, longitude]).addTo(map);
                     const provider = new GeoSearch.OpenStreetMapProvider();
 
@@ -62,12 +62,12 @@
                     });
 
                     map.addControl(searchControl);
-                    map.on('click', (e) => {
+                    map.on('geosearch/showlocation', function (e) {
 
                         var routingControl = L.Routing.control({
                             waypoints: [
                                 L.latLng(latitude, longitude),
-                                e.latlng
+                                e.location
                             ],
                             routeWhileDragging: true,
                             geocoder: geo
