@@ -61,7 +61,7 @@
                         searchLabel: 'Enter location'
                     });
 
-                    searchControl.addTo(map);
+                    map.addControl(searchControl);
                     map.on('click', (e) => {
 
                         var routingControl = L.Routing.control({
