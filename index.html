@@ -61,7 +61,7 @@
 
                     map.addControl(searchControl);
                     searchControl.style.left = "70vw"
-                    map.on('geosearch/showlocation', function (e) {
+                    map.on('click', function (e) {
 
                         var routingControl = L.Routing.control({
                             waypoints: [
