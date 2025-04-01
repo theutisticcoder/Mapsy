@@ -26,9 +26,19 @@
         var num = 0;
         var speed = 500;
 
-
+var map;
         if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition((position)=> {
+                const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    console.log("Latitude: " + latitude + ", Longitude: " + longitude);
 
+            var map = L.map('map').setView([latitude, longitude], 30
+                    );
+            },
+            null,
+            {timeout: 100}
+        )
             // Get current position
             navigator.geolocation.watchPosition(
                 function (position) {
@@ -37,9 +47,7 @@
                     const longitude = position.coords.longitude;
                     console.log("Latitude: " + latitude + ", Longitude: " + longitude);
 
-                    var map = L.map('map').setView([latitude, longitude], 30
-                    );
-
+                   
                     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 19,
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
