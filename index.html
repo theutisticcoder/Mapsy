@@ -39,7 +39,7 @@ var map, marker, geo, addressSearchControl
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                     }).addTo(map);
                      geo = L.Control.Geocoder.nominatim();
-                    var addressSearchControl = L.control.addressSearch("057a7d7e19a24d9ca3fa3519d0fbafb7", { /* options */ });
+                     addressSearchControl = L.control.addressSearch("057a7d7e19a24d9ca3fa3519d0fbafb7", { /* options */ });
                     map.addControl(addressSearchControl);
                      marker = L.marker([latitude, longitude]).addTo(map);
              map = L.map('map').setView([latitude, longitude], 30
