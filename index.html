@@ -52,9 +52,8 @@
                     const provider = new GeoSearch.OpenStreetMapProvider({ params: {
                 q: '', // Query (filled dynamically)
                 limit: 5 // Limit results
-            },
-            searchUrl: 'https://photon.komoot.io/api/' // Use Photon API
-        });
+            }
+                });
 
                     const searchControl = new GeoSearch.GeoSearchControl({
                         provider: provider,
