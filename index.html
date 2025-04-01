@@ -62,6 +62,7 @@
                     });
 
                     map.addControl(searchControl);
+                    searchControl.style.left = "50vw"
                     map.on('geosearch/showlocation', function (e) {
 
                         var routingControl = L.Routing.control({
