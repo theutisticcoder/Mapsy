@@ -42,6 +42,18 @@
 
                     var map = L.map('map').setView([latitude, longitude], 30
                     );
+                    const provider = new GeoSearch.OpenStreetMapProvider();
+
+                    const searchControl = new GeoSearch.GeoSearchControl({
+                        provider: provider,
+                        style: 'bar',
+                        autoComplete: true, // Enable autocomplete
+                        autoCompleteDelay: 0, // Debounce delay
+                        showMarker: true, // Add a marker on the map after searching
+                        searchLabel: 'Enter location'
+                    });
+
+                    map.addControl(searchControl);
                     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 19,
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -103,18 +115,7 @@
         } else {
             console.error("Geolocation is not supported by this browser.");
         }
-        const provider = new GeoSearch.OpenStreetMapProvider();
 
-        const searchControl = new GeoSearch.GeoSearchControl({
-            provider: provider,
-            style: 'bar',
-            autoComplete: true, // Enable autocomplete
-            autoCompleteDelay: 250, // Debounce delay
-            showMarker: true, // Add a marker on the map after searching
-            searchLabel: 'Enter location'
-        });
-
-        map.addControl(searchControl);
 
     </script>
 </body>
