@@ -26,13 +26,22 @@
         var num = 0;
         var speed = 500;
 
-var map;
+var map, marker, geo, addressSearchControl
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition((position)=> {
                 const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
                     console.log("Latitude: " + latitude + ", Longitude: " + longitude);
 
+                   
+                    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                    }).addTo(map);
+                     geo = L.Control.Geocoder.nominatim();
+                    var addressSearchControl = L.control.addressSearch("057a7d7e19a24d9ca3fa3519d0fbafb7", { /* options */ });
+                    map.addControl(addressSearchControl);
+                     marker = L.marker([latitude, longitude]).addTo(map);
              map = L.map('map').setView([latitude, longitude], 30
                     );
             },
@@ -47,15 +56,6 @@ var map;
                     const longitude = position.coords.longitude;
                     console.log("Latitude: " + latitude + ", Longitude: " + longitude);
 
-                   
-                    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        maxZoom: 19,
-                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                    }).addTo(map);
-                    var geo = L.Control.Geocoder.nominatim();
-                    const addressSearchControl = L.control.addressSearch("057a7d7e19a24d9ca3fa3519d0fbafb7", { /* options */ });
-                    map.addControl(addressSearchControl);
-                    var marker = L.marker([latitude, longitude]).addTo(map);
                      map.on('click', function (e) {
 
                         var routingControl = L.Routing.control({
