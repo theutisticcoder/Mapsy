@@ -17,7 +17,7 @@
 
 <body>
     <div id="map" style="height: 100vh; width: 100vw; top: 0vh;"></div>
-   <button style="z-index: 100000; font-size: 50pt; height:10vh; width: 10vw; left: 0px; position: absolute; top: 0px;"
+   <button style="z-index: 100000; font-size: 40pt; height:10vh; width: 10vw; left: 0px; position: absolute; top: 0px; color: white; background: blue; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;"
         id="go">GO!</button>
     <script>
         var instructions = [];
@@ -60,7 +60,7 @@
                     });
 
                     map.addControl(searchControl);
-                    searchControl.style.left = "80vw"
+                    searchControl.style.left = "70vw"
                     map.on('geosearch/showlocation', function (e) {
 
                         var routingControl = L.Routing.control({
