@@ -48,11 +48,7 @@
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                     }).addTo(map);
                     var geo = L.Control.Geocoder.nominatim();
-                    var geocodingControl = new L.Control.Geocoder({
-                        geocoder: geo,
-                        collapsed: false // Make it initially expanded
-                        // Add other options if needed
-                    }).addTo(map);
+                   
                     var marker = L.marker([latitude, longitude]).addTo(map);
                     const provider = new GeoSearch.OpenStreetMapProvider();
 
